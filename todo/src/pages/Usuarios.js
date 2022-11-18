@@ -58,12 +58,12 @@ function Usuarios() {
 
                   {/* <!--TASKS--> */}
                   <div className="align-items-center d-flex form-check form-switch justify-content-evenly mb-3">
-                    {usuario.tarefa.map((t, index)=>{
+                    {usuario.tarefas.map((tarefa, index)=>{
                        return (
                         <div key={index}>
                         <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
                     <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
-                              {t.nome}       
+                              {tarefa.nome}       
                     </span>
                     <Link to="/tarefa/delete/:id" className="col-1"><i className="bi bi-trash"></i></Link>
                     </div>
