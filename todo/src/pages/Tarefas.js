@@ -5,6 +5,7 @@ import axios from 'axios'
 function Tarefas() {
 
   const [tarefas, setTarefas] = useState([])
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     async function fetchTarefas() {
@@ -19,13 +20,26 @@ function Tarefas() {
     console.log(tarefas)
   }, [])
 
+  function handleChange(e) {
+    setSearch(e.target.value)
+    console.log(search)
+  }
+
   return (
     <main>
+
+      {/* SEAERCH BAR */}
+      <div className="col-10 justify-content-center mx-auto my-4 py-md-4 row text-center">
+        <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleChange}/>
+      </div>
+
       <h1>Estou na página tarefas</h1>
       <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        {tarefas.map(tarefa => {
+        {tarefas.filter(tarefa => {
+          return tarefa.name.toLowerCase().includes(search) || tarefa.country.toLowerCase().includes(search)
+        }).map(tarefa => {
           return (
-            <div className="col" >
+            <div className="col" key={tarefa.id}>
               <div className="card mb-4 rounded-3 shadow-sm">
 
                 {/* <!--CARD HEADER--> */}
