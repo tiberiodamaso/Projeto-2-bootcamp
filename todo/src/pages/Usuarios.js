@@ -2,22 +2,25 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-function Tarefas() {
+function Usuarios() {
 
-  const [tarefas, setTarefas] = useState([])
+  const [usuarios, setUsuarios] = useState([])
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchTarefas() {
+    async function fetchUsuarios() {
       try {
-        const response = await axios.get('https://api.openbrewerydb.org/breweries?per_page=3')
-        setTarefas(response.data)
+        const response = await axios.get('https://ironrest.herokuapp.com/todo92/')
+        setUsuarios(response.data)
+        setIsLoading(false)
+        
       } catch (error) {
         console.log(error)
       }
     }
-    fetchTarefas()
-    console.log(tarefas)
+    fetchUsuarios()
+    
   }, [])
 
   function handleChange(e) {
@@ -26,25 +29,28 @@ function Tarefas() {
   }
 
   return (
+
     <main>
 
-      {/* SEAERCH BAR */}
+     {isLoading === false && (
+
+<div>
       <div className="col-10 justify-content-center mx-auto my-4 py-md-4 row text-center">
         <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleChange}/>
       </div>
 
       <h1>Estou na página tarefas</h1>
       <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        {tarefas.filter(tarefa => {
-          return tarefa.name.toLowerCase().includes(search) || tarefa.country.toLowerCase().includes(search)
-        }).map(tarefa => {
+        {usuarios.filter(usuario => {
+          return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
+        }).map(usuario => {
           return (
-            <div className="col" key={tarefa.id}>
+            <div className="col" key={usuario._id}>
               <div className="card mb-4 rounded-3 shadow-sm">
 
                 {/* <!--CARD HEADER--> */}
                 <div className="card-header py-3">
-                  <h4 className="my-0 fw-normal">{tarefa.name}</h4>
+                  <h4 className="my-0 fw-normal">{usuario.nome}</h4>
                 </div>
 
                 {/* <!--CARD BODY--> */}
@@ -52,9 +58,19 @@ function Tarefas() {
 
                   {/* <!--TASKS--> */}
                   <div className="align-items-center d-flex form-check form-switch justify-content-evenly mb-3">
-                    <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                    <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">{tarefa.brewery_type}</span>
+                    {usuario.tarefa.map((t, index)=>{
+                       return (
+                        <div key={index}>
+                        <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                    <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
+                              {t.nome}       
+                    </span>
                     <Link to="/tarefa/delete/:id" className="col-1"><i className="bi bi-trash"></i></Link>
+                    </div>
+                       )
+
+                    })}
+                  
                   </div>
 
                   {/* <!--ADD TASK--> */}
@@ -68,11 +84,19 @@ function Tarefas() {
 
               </div>
             </div>
+
+      
           )
         })}
       </div>
+
+      </div>
+     )}
+
+
     </main>
+
   );
 }
 
-export default Tarefas;
+export default Usuarios;
