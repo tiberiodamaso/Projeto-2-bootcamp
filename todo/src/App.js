@@ -1,5 +1,5 @@
 import Navbar from './components/Navbar'
-import Tarefas from './pages/Tarefas'
+import Usuarios from './pages/Usuarios'
 import Equipe from './pages/Equipe'
 import {Routes, Route} from 'react-router-dom'
 
@@ -11,7 +11,7 @@ function App() {
 
     <Navbar />
     <Routes>
-      <Route path="/" element={<Tarefas />} />
+      <Route path="/" element={<Usuarios />} />
       <Route path="/equipe" element={<Equipe />} />
     </Routes>
 
