@@ -22,8 +22,6 @@ function CadastrarUsuario() {
   }
 
   async function handleSubmit(e) {
-    console.log("entre no handle submit");
-    console.log(form);
     e.preventDefault();
     await axios.post("https://ironrest.herokuapp.com/todo92", form);
     setForm({
