@@ -100,7 +100,9 @@ function Usuarios() {
                         <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleSearch} />
                     </div>
 
-                    <h1>Estou na página tarefas</h1>
+                    <div className='row'>
+                        <h1 className='text-center p-4'>Tarefas</h1>
+                    </div>
                     <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
                         {usuarios.filter(usuario => {
                             return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
