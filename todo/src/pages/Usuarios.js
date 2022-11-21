@@ -41,10 +41,14 @@ function Usuarios() {
       }
 
     async function handleDelete(e) {
-        console.log(e)
-        const usuario = e.currentTarget.name
-        const tarefas = await axios.get('https://ironrest.herokuapp.com/todo92/')
-        await axios.delete('https://ironrest.herokuapp.com/todo92/')
+        const index = e.currentTarget.parentElement.getAttribute('name')
+        const usuarioId = e.currentTarget.name
+        const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
+        const usuario = response.data
+        const clone = {...usuario}
+        delete clone._id
+        clone.tarefas.splice(index, 1)
+        await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
         handleReload()
     }
 
@@ -85,7 +89,7 @@ function Usuarios() {
                                                             <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
                                                                 {tarefa.nome}
                                                             </span>
-                                                            <button name={usuario._id} className="col-1" onClick={handleDelete}><i className="bi bi-trash"></i></button>
+                                                            <button name={usuario._id} className="btn text-danger" onClick={handleDelete}><i className="bi bi-trash"></i></button>
                                                         </div>
                                                     )
 
