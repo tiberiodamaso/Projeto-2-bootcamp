@@ -15,13 +15,13 @@ function Usuarios() {
             try {
                 const response = await axios.get('https://ironrest.herokuapp.com/todo92/')
                 setUsuarios(response.data)
-                setTarefas(usuarios.map(usuario => {
+                setTarefas(response.data.usuarios.map(usuario => {
                     return usuario.tarefas.map(tarefa => {
                         return tarefa.nome.toLowerCase()
                     })
                 }))
                 setIsLoading(false)
-                
+
             } catch (error) {
                 console.log(error)
             }
@@ -38,14 +38,14 @@ function Usuarios() {
 
     function handleReload() {
         setReload(!reload)
-      }
+    }
 
     async function handleDelete(e) {
         const index = e.currentTarget.parentElement.getAttribute('name')
         const usuarioId = e.currentTarget.name
         const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
         const usuario = response.data
-        const clone = {...usuario}
+        const clone = { ...usuario }
         delete clone._id
         clone.tarefas.splice(index, 1)
         await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
@@ -66,7 +66,7 @@ function Usuarios() {
                     <h1>Estou na página tarefas</h1>
                     <div className="row row-cols-1 row-cols-md-2 mb-3 text-center">
                         {usuarios.filter(usuario => {
-                            return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search) || tarefas.flat().includes(search)
+                            return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
                         }).map(usuario => {
                             return (
                                 <div className="col" key={usuario._id}>
@@ -89,7 +89,7 @@ function Usuarios() {
                                                             <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
                                                                 {tarefa.nome}
                                                             </span>
-                                                            <button name={usuario._id} className="btn text-danger" onClick={handleDelete}><i className="bi bi-trash"></i></button>
+                                                            <button name={usuario._id} className="btn text-danger p-0" onClick={handleDelete}><i className="bi bi-trash"></i></button>
                                                         </div>
                                                     )
 
