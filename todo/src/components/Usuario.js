@@ -79,6 +79,7 @@ function Usuario(props) {
                 index={index}
                 usuario={usuario}
                 handleReload={handleReload}
+                setTarefas={setTarefas}
               />
             ))}
           </div>
