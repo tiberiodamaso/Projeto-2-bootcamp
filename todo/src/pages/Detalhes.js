@@ -2,6 +2,8 @@ import {useState, useEffect} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import 'bootstrap/js/dist/modal.js'
+
 
 
 
@@ -49,6 +51,17 @@ function Detalhes(){
         }
     }
 
+    async function handleDelete() {
+        try {
+            await axios.delete(`https://ironrest.herokuapp.com/todo92/${id}`);
+            navigate("/equipe");
+            toast.success("Usuário deletado com sucesso.");
+        } catch (error) {
+            console.log("[Erro deletar usuario] ", error);
+            toast.error("Não foi possível deletar o usuário.");
+        }
+    }
+
     return (
         <div>
             <h1>Equipe</h1>
@@ -82,7 +95,7 @@ function Detalhes(){
                     <div className="justify-content-between m-0 mx-auto my-4 row">
                         <button className="btn btn-secondary col-3" onClick={()=>{navigate("/equipe")}}>Voltar</button>
                         <button className="btn btn-primary col-3" onClick={()=>{setShowForm(true)}}>Atualizar</button>
-                        <button className="btn btn-danger col-3">Deletar</button>
+                        <button className="btn btn-danger col-3" data-bs-toggle="modal" data-bs-target="#deleteModal">Deletar</button>
                     </div>
                 </div>
             </div>
@@ -132,6 +145,24 @@ function Detalhes(){
 
             )}
 
+            {/* Delete modal */}
+            <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">Deletar usuário</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        Deseja realmente deletar o usuário {usuario.nome}?
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={()=>handleDelete()}>Deletar</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
     )
