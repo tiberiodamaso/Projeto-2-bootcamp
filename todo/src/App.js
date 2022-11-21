@@ -18,7 +18,6 @@ function App() {
         <Route path="/novo" element={<CadastrarUsuario />} />
         <Route path="/equipe/:id" element={<Detalhes />} />
       </Routes>
-
     </div>
   );
 }
