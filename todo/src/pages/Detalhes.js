@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react"; 
 import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 
@@ -40,10 +41,11 @@ function Detalhes(){
          
             setReload(!reload);
             setShowForm(false);
-
+            toast.success("Usuário atualizado com sucesso!");
             
         } catch (error) {
             console.log(error); 
+            toast.error("Erro na atualização do usuário");
         }
     }
 
@@ -56,7 +58,7 @@ function Detalhes(){
             <article>
             <div className="align-content-center m-0 py-3 row">
                 <div className="col col-md-3 text-center">
-                    <img src={usuario.foto} alt="foto-usuario" width="200px" style={{borderRadius: "50%", border: "1px solid #cccccc", margin: "10px"}}/>
+                    <img src={usuario.foto} alt="foto-usuario" width="200px" height="200px" style={{borderRadius: "50%", border: "1px solid #cccccc", margin: "10px"}}/>
                 </div>
                 
                 <div className="border col-md-6 m-0 py-2 rounded-bottom">
