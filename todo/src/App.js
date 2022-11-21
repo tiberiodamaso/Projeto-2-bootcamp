@@ -5,6 +5,7 @@ import Equipe from "./pages/Equipe";
 import CadastrarUsuario from "./pages/CadastrarUsuario";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import Detalhes from "./pages/Detalhes";
 
 
 function App() {

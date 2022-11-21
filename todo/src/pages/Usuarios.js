@@ -16,7 +16,7 @@ function Usuarios() {
             try {
                 const response = await axios.get('https://ironrest.herokuapp.com/todo92/')
                 setUsuarios(response.data)
-                setTarefas(response.data.usuarios.map(usuario => {
+                setTarefas(response.data.map(usuario => {
                     return usuario.tarefas.map(tarefa => {
                         return tarefa.nome.toLowerCase()
                     })
@@ -28,51 +28,25 @@ function Usuarios() {
             }
         }
         fetchUsuarios()
-        console.log(tarefas.flat())
     }, [reload])
 
     function handleChange(e) {
         setSearch(e.target.value)
         console.log(search)
         handleReload()
-    }  
+    }
 
-  {/* função que cuidará do click no botão adicionar de cada card*/}
-  function handleSubmit(e){
-    console.log(textarea)
-    {/*chamar a rotina que faz o update do usuario passando o texto da tarefa (variavel textarea)*/}
+    {/* função que cuidará do click no botão adicionar de cada card*/ }
+    function handleSubmit(e) {
+        console.log(textarea)
+        {/*chamar a rotina que faz o update do usuario passando o texto da tarefa (variavel textarea)*/ }
 
-  }
+    }
 
-   {/* função que atualiza as mudanças na textArea reservada para digitar a tarefa*/}
-  function handleTextChange(e){
-    setTextArea(e.target.value )
-  }
-
-  return (
-
-    <main>
-
-     {isLoading === false && (
-
-<div>
-      <div className="col-10 justify-content-center mx-auto my-4 py-md-4 row text-center">
-        <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleChange}/>
-      </div>
-
-      <h1>Estou na página tarefas</h1>
-      <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        {usuarios.filter(usuario => {
-          return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
-        }).map(usuario => {
-          return (
-            <div className="col" key={usuario._id}>
-              <div className="card mb-4 rounded-3 shadow-sm">
-
-                {/* <!--CARD HEADER--> */}
-                <div className="card-header py-3">
-                  <h4 className="my-0 fw-normal">{usuario.nome}</h4>
-                </div>
+    {/* função que atualiza as mudanças na textArea reservada para digitar a tarefa*/ }
+    function handleTextChange(e) {
+        setTextArea(e.target.value)
+    }
 
     function handleReload() {
         setReload(!reload)
@@ -102,7 +76,7 @@ function Usuarios() {
                     </div>
 
                     <h1>Estou na página tarefas</h1>
-                    <div className="row row-cols-1 row-cols-md-2 mb-3 text-center">
+                    <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
                         {usuarios.filter(usuario => {
                             return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
                         }).map(usuario => {
@@ -112,7 +86,7 @@ function Usuarios() {
 
                                         {/* <!--CARD HEADER--> */}
                                         <div className="card-header py-3">
-                                            <h4 className="my-0 fw-normal">{usuario.nome} | {usuario.setor}</h4>
+                                            <h4 className="my-0 fw-normal">{usuario.nome} | {usuario.setor} </h4>
                                         </div>
 
                                         {/* <!--CARD BODY--> */}
