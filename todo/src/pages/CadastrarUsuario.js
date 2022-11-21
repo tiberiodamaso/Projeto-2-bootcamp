@@ -17,18 +17,52 @@ function CadastrarUsuario() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function validate(){
+    const nome = form.nome;
+    const reNome = /^[a-z ,.'-]+$/i;
+    if (!reNome.test(nome)){
+      toast.error("Digite um nome válido!");
+      return false;
+    }
+
+    const setor = form.setor;
+    if (!reNome.test(setor)){
+      toast.error("Digite um nome de setor válido!");
+      return false;
+    }
+
+    const email = form.email;
+    const reEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!reEmail.test(email)){
+      toast.error("Digite um email válido!");
+      return false;
+    }
+
+    const link = form.foto
+    const reLink = /(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+    if (!reLink.test(link)){
+      toast.error("Digite uma URL válida!");
+      return false;
+    }
+    return true;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    await axios.post("https://ironrest.herokuapp.com/todo92", form);
-    setForm({
-      nome: "",
-      email: "",
-      setor: "",
-      foto: "",
-      tarefas: [],
-    });
-    toast.success("Usuário adicionado com sucesso!");
-    navigate('/equipe');
+    if (validate()) {
+      await axios.post("https://ironrest.herokuapp.com/todo92", form);
+      setForm({
+        nome: "",
+        email: "",
+        setor: "",
+        foto: "",
+        tarefas: [],
+      });
+      toast.success("Usuário adicionado com sucesso!");
+      navigate('/equipe');
+    }
+
+
   }
 
   return (
