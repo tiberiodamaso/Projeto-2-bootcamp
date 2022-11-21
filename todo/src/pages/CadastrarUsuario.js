@@ -8,13 +8,7 @@ function CadastrarUsuario() {
     email: "",
     setor: "",
     foto: "",
-    tarefas: [
-      {
-        nome: "",
-        feito: "",
-        data_conclusao: "",
-      },
-    ],
+    tarefas: [],
   });
 
   function handleChange(e) {
@@ -29,13 +23,7 @@ function CadastrarUsuario() {
       email: "",
       setor: "",
       foto: "",
-      tarefas: [
-        {
-          nome: "",
-          feito: "",
-          data_conclusao: "",
-        },
-      ],
+      tarefas: [],
     });
     toast.success("Usuário adicionado com sucesso!");
   }
