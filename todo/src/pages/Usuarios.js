@@ -9,6 +9,7 @@ function Usuarios() {
     const [search, setSearch] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [reload, setReload] = useState(false)
+    const [textarea, setTextArea] = useState('')
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -34,7 +35,44 @@ function Usuarios() {
         setSearch(e.target.value)
         console.log(search)
         handleReload()
-    }
+    }  
+
+  {/* função que cuidará do click no botão adicionar de cada card*/}
+  function handleSubmit(e){
+    console.log(textarea)
+    {/*chamar a rotina que faz o update do usuario passando o texto da tarefa (variavel textarea)*/}
+
+  }
+
+   {/* função que atualiza as mudanças na textArea reservada para digitar a tarefa*/}
+  function handleTextChange(e){
+    setTextArea(e.target.value )
+  }
+
+  return (
+
+    <main>
+
+     {isLoading === false && (
+
+<div>
+      <div className="col-10 justify-content-center mx-auto my-4 py-md-4 row text-center">
+        <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleChange}/>
+      </div>
+
+      <h1>Estou na página tarefas</h1>
+      <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {usuarios.filter(usuario => {
+          return usuario.nome.toLowerCase().includes(search) || usuario.setor.toLowerCase().includes(search)
+        }).map(usuario => {
+          return (
+            <div className="col" key={usuario._id}>
+              <div className="card mb-4 rounded-3 shadow-sm">
+
+                {/* <!--CARD HEADER--> */}
+                <div className="card-header py-3">
+                  <h4 className="my-0 fw-normal">{usuario.nome}</h4>
+                </div>
 
     function handleReload() {
         setReload(!reload)
