@@ -30,10 +30,14 @@ function Usuarios() {
         fetchUsuarios()
     }, [reload])
 
-    function handleChange(e) {
+    function handleSearch(e) {
         setSearch(e.target.value)
-        console.log(search)
-        handleReload()
+    }
+
+    function handleChange(e) {
+        console.log(e.target.checked)
+        const tarefa = e.currentTarget.nextElementSibling
+        tarefa.classList.toggle('text-decoration-line-through')
     }
 
     {/* função que cuidará do click no botão adicionar de cada card*/ }
@@ -72,7 +76,7 @@ function Usuarios() {
 
                 <div>
                     <div className="col-10 justify-content-center mx-auto my-4 py-md-4 row text-center">
-                        <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleChange} />
+                        <input type="search" value={search} className="form-control" placeholder="Pesquise por nome e setor do membro da equipe" aria-label="Search" onChange={handleSearch} />
                     </div>
 
                     <h1>Estou na página tarefas</h1>
@@ -94,16 +98,18 @@ function Usuarios() {
 
                                             {/* <!--TASKS--> */}
                                             <div className="d-flex flex-column form-check form-switch mb-3">
-                                                {usuario.tarefas.map((tarefa, index) => {
+                                                {usuario.tarefas.length > 0 && usuario.tarefas.map((tarefa, index) => {
+                                                    if (tarefa.nome.length > 0) {
                                                     return (
                                                         <div className="d-flex justify-content-between" key={index} name={index}>
-                                                            <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                                                            <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
-                                                                {tarefa.nome}
-                                                            </span>
+                                                            <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleChange} />
+                                                                <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
+                                                                    {tarefa.nome}
+                                                                </span>
                                                             <button name={usuario._id} className="btn text-danger p-0" onClick={handleDelete}><i className="bi bi-trash"></i></button>
                                                         </div>
                                                     )
+                                                    }
 
                                                 })}
 
