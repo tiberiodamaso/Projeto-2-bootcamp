@@ -7,6 +7,7 @@ function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
   const [search, setSearch] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [textarea, setTextArea] = useState('')
 
   useEffect(() => {
     async function fetchUsuarios() {
@@ -26,6 +27,18 @@ function Usuarios() {
   function handleChange(e) {
     setSearch(e.target.value)
     console.log(search)
+  }
+
+  {/* função que cuidará do click no botão adicionar de cada card*/}
+  function handleSubmit(e){
+    console.log(textarea)
+    {/*chamar a rotina que faz o update do usuario passando o texto da tarefa (variavel textarea)*/}
+
+  }
+
+   {/* função que atualiza as mudanças na textArea reservada para digitar a tarefa*/}
+  function handleTextChange(e){
+    setTextArea(e.target.value )
   }
 
   return (
@@ -76,8 +89,8 @@ function Usuarios() {
                   {/* <!--ADD TASK--> */}
                   <div className="d-flex justify-content-evenly mb-3">
                     <textarea type="text" className="form-control mx-3" id="adicionarTarefa"
-                      placeholder="Minha nova tarefa"></textarea>
-                    <button type="button" className="btn btn-outline-primary">ADD</button>
+                      placeholder="Minha nova tarefa" onChange={handleTextChange}></textarea>
+                    <button type="button" className="btn btn-outline-primary" onClick={handleSubmit}>ADD</button>
                   </div>
 
                 </div>
