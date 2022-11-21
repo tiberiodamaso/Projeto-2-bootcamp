@@ -74,7 +74,7 @@ function Usuarios() {
 
                                         {/* <!--CARD HEADER--> */}
                                         <div className="card-header py-3">
-                                            <h4 className="my-0 fw-normal">{usuario.nome}</h4>
+                                            <h4 className="my-0 fw-normal">{usuario.nome} | {usuario.setor}</h4>
                                         </div>
 
                                         {/* <!--CARD BODY--> */}
