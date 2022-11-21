@@ -52,7 +52,7 @@ function Equipe() {
               
                 <div key={usuario._id} className="row border m-0 py-2 align-items-center">
                   <div className="col-md-2 py-1 text-center">
-                    <span><img src={usuario.foto} alt="foto-perfil" width="40px" style={{borderRadius: "50%", border: "1px solid #cccccc"}}/></span>
+                    <span><img src={usuario.foto} alt="foto-perfil" width="40px" height="40px" style={{borderRadius: "50%", border: "1px solid #cccccc"}}/></span>
                   </div>
                   <div className="col-md-4 py-1 text-md-start">
                     <span>{usuario.nome}</span>
@@ -75,9 +75,11 @@ function Equipe() {
               
 
       })}
-          <div className="align-items-center m-0 mx-auto my-4 row w-25">
-            <button className="btn btn-primary">Novo membro</button>
-          </div>
+          <Link to="/novo">
+            <div className="align-items-center m-0 mx-auto my-4 row w-25">
+              <button className="btn btn-primary">Novo membro</button>
+            </div>
+          </Link>
           </article>
     </div>
    );

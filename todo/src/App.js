@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import Detalhes from "./pages/Detalhes";
 
 
+
 function App() {
   return (
     <div className="App container">
