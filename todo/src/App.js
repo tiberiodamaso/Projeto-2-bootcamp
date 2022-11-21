@@ -13,6 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Usuarios />} />
       <Route path="/equipe" element={<Equipe />} />
+      <Route path="/delete/:userId/:task" element={<Usuarios />} />
     </Routes>
 
     </div>

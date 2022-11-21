@@ -8,6 +8,7 @@ function Usuarios() {
     const [tarefas, setTarefas] = useState([])
     const [search, setSearch] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -27,11 +28,24 @@ function Usuarios() {
         }
         fetchUsuarios()
         console.log(tarefas.flat())
-    }, [])
+    }, [reload])
 
     function handleChange(e) {
         setSearch(e.target.value)
         console.log(search)
+        handleReload()
+    }
+
+    function handleReload() {
+        setReload(!reload)
+      }
+
+    async function handleDelete(e) {
+        console.log(e)
+        const usuario = e.currentTarget.name
+        const tarefas = await axios.get('https://ironrest.herokuapp.com/todo92/')
+        await axios.delete('https://ironrest.herokuapp.com/todo92/')
+        handleReload()
     }
 
     return (
@@ -66,12 +80,12 @@ function Usuarios() {
                                             <div className="d-flex flex-column form-check form-switch mb-3">
                                                 {usuario.tarefas.map((tarefa, index) => {
                                                     return (
-                                                        <div className="d-flex justify-content-between" key={index}>
+                                                        <div className="d-flex justify-content-between" key={index} name={index}>
                                                             <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
                                                             <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
                                                                 {tarefa.nome}
                                                             </span>
-                                                            <Link to="/tarefa/delete/:id" className="col-1"><i className="bi bi-trash"></i></Link>
+                                                            <button name={usuario._id} className="col-1" onClick={handleDelete}><i className="bi bi-trash"></i></button>
                                                         </div>
                                                     )
 
