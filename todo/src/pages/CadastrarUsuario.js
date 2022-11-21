@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 
 function CadastrarUsuario() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -38,6 +40,7 @@ function CadastrarUsuario() {
       ],
     });
     toast.success("Usuário adicionado com sucesso!");
+    navigate('/equipe');
   }
 
   return (
@@ -64,7 +67,7 @@ function CadastrarUsuario() {
             <input type="text" className="form-control" name="foto" value={form.foto} onChange={handleChange} placeholder="http://url.da.foto" />
           </div>
           <div className="justify-content-between m-0 mx-auto my-4 row">
-            <button className="btn btn-secondary col-5">Cancelar</button>
+            <button className="btn btn-secondary col-5" onClick={()=>navigate('/equipe')}>Cancelar</button>
             <button className="btn btn-primary col-5" onClick={handleSubmit}>
               Salvar
             </button>
