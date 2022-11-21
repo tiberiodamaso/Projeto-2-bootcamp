@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 function Usuarios() {
 
@@ -57,15 +58,20 @@ function Usuarios() {
     }
 
     async function handleDelete(e) {
-        const index = e.currentTarget.parentElement.getAttribute('name')
-        const usuarioId = e.currentTarget.name
-        const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
-        const usuario = response.data
-        const clone = { ...usuario }
-        delete clone._id
-        clone.tarefas.splice(index, 1)
-        await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
-        handleReload()
+        try {
+            const index = e.currentTarget.parentElement.getAttribute('name')
+            const usuarioId = e.currentTarget.name
+            const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
+            const usuario = response.data
+            const clone = { ...usuario }
+            delete clone._id
+            clone.tarefas.splice(index, 1)
+            await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
+            handleReload()
+        } catch (error) {
+            toast.error('Algo deu errado')
+
+        }
     }
 
     return (
@@ -90,6 +96,7 @@ function Usuarios() {
 
                                         {/* <!--CARD HEADER--> */}
                                         <div className="card-header py-3">
+                                            <img className='border rounded-circle w-25' src={usuario.foto} alt='foto do usuário' />
                                             <h4 className="my-0 fw-normal">{usuario.nome} | {usuario.setor} </h4>
                                         </div>
 
@@ -103,7 +110,7 @@ function Usuarios() {
                                                     return (
                                                         <div className="d-flex justify-content-between" key={index} name={index}>
                                                             <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleChange} />
-                                                                <span className="col-9 form-check-label" htmlFor="flexSwitchCheckDefault">
+                                                                <span className="col-9 form-check-label text-start" htmlFor="flexSwitchCheckDefault">
                                                                     {tarefa.nome}
                                                                 </span>
                                                             <button name={usuario._id} className="btn text-danger p-0" onClick={handleDelete}><i className="bi bi-trash"></i></button>
