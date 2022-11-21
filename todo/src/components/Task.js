@@ -1,8 +1,23 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDrag } from "react-dnd";
 
 function Task(props) {
   const { tarefa, index, usuario, handleReload } = props;
+
+  const [{ opacity }, dragRef] = useDrag(
+    () => ({
+      type: "task",
+      item: { tarefa },
+      collect: (monitor) => {
+        // console.log(monitor.getItem());
+        return {
+          opacity: monitor.isDragging() ? 0.5 : 1,
+        };
+      },
+    }),
+    []
+  );
 
   async function handleDelete(e) {
     try {
@@ -26,13 +41,12 @@ function Task(props) {
   }
 
   function handleChange(e) {
-    console.log(e.target.checked);
     const tarefa = e.currentTarget.nextElementSibling;
     tarefa.classList.toggle("text-decoration-line-through");
   }
 
   return (
-    <div className="d-flex justify-content-between" key={index} name={index}>
+    <div ref={dragRef} className="d-flex justify-content-between" name={index}>
       <input
         className="col-1 form-check-input"
         type="checkbox"

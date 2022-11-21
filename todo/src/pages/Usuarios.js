@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 import Usuario from "../components/Usuario";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
-  const [tarefas, setTarefas] = useState([]);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(false);
@@ -19,13 +16,6 @@ function Usuarios() {
           "https://ironrest.herokuapp.com/todo92/"
         );
         setUsuarios(response.data);
-        setTarefas(
-          response.data.map((usuario) => {
-            return usuario.tarefas.map((tarefa) => {
-              return tarefa.nome.toLowerCase();
-            });
-          })
-        );
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -69,7 +59,7 @@ function Usuarios() {
                 );
               })
               .map((usuario) => (
-                <Usuario usuario={usuario} handleReload={handleReload} />
+                <Usuario key={usuario._id} usuario={usuario} handleReload={handleReload} />
               ))}
           </div>
         </div>

@@ -1,15 +1,35 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDrop } from "react-dnd";
 
 import Task from "./Task";
 
 function Usuario(props) {
   const { usuario, handleReload } = props;
 
+  const [tarefas, setTarefas] = useState(usuario.tarefas);
+
+
+  const [collectedProps, drop] = useDrop(() => ({
+    accept: "task",
+    drop: (item) => {
+      adicionarTarefa(item.tarefa.nome, item.tarefa.feito);
+      handleReload();
+    },
+  }));
+
+
   async function handleSubmit(e) {
     e.preventDefault();
     const caixa = e.currentTarget.previousSibling;
-    const usuarioId = e.target.id;
+    await adicionarTarefa(caixa.value);
+    caixa.value = "";
+    toast.success("Tarefa adicionada com sucesso.");
+  }
+
+  async function adicionarTarefa(nome, feito) {
+    const usuarioId = usuario._id;
     try {
       const response = await axios.get(
         `https://ironrest.herokuapp.com/todo92/${usuarioId}`
@@ -18,16 +38,15 @@ function Usuario(props) {
       const clone = { ...usuario };
       delete clone._id;
       const tarefa = {
-        nome: caixa.value,
-        feito: "",
+        nome: nome,
+        feito: feito ?? "",
       };
       clone.tarefas.push(tarefa);
       await axios.put(
         `https://ironrest.herokuapp.com/todo92/${usuarioId}`,
         clone
       );
-      caixa.value = "";
-      toast.success("Tarefa adicionada com sucesso.");
+      setTarefas(clone.tarefas);
       handleReload();
     } catch (error) {
       console.log(error);
@@ -35,7 +54,7 @@ function Usuario(props) {
   }
 
   return (
-    <div className="col" key={usuario._id}>
+    <div ref={drop} className="col">
       <div className="card mb-4 rounded-3 shadow-sm">
         {/* <!--CARD HEADER--> */}
         <div className="card-header py-3">
@@ -53,7 +72,7 @@ function Usuario(props) {
         <div className="card-body">
           {/* <!--TASKS--> */}
           <div className="d-flex flex-column form-check form-switch mb-3">
-            {usuario.tarefas.map((tarefa, index) => (
+            {tarefas.map((tarefa, index) => (
               <Task
                 key={index}
                 tarefa={tarefa}
