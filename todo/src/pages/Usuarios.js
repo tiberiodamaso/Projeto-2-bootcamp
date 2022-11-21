@@ -10,7 +10,7 @@ function Usuarios() {
     const [search, setSearch] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [reload, setReload] = useState(false)
-    const [textarea, setTextArea] = useState('')
+
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -41,17 +41,32 @@ function Usuarios() {
         tarefa.classList.toggle('text-decoration-line-through')
     }
 
-    {/* função que cuidará do click no botão adicionar de cada card*/ }
-    function handleSubmit(e) {
-        console.log(textarea)
-        {/*chamar a rotina que faz o update do usuario passando o texto da tarefa (variavel textarea)*/ }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const caixa = e.currentTarget.previousSibling
+        const usuarioId = e.target.id
+        try{
+            const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
+            const usuario = response.data
+            const clone = { ...usuario }
+            delete clone._id
+            const tarefa = {
+                nome: caixa.value,
+                feito: ''
+            }
+            clone.tarefas.push(tarefa)
+            await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
+            caixa.value = ''
+            toast.success('Tarefa adicionada com sucesso.')
+            handleReload()
+
+        } catch (error){
+            console.log(error)
+        }
 
     }
 
-    {/* função que atualiza as mudanças na textArea reservada para digitar a tarefa*/ }
-    function handleTextChange(e) {
-        setTextArea(e.target.value)
-    }
 
     function handleReload() {
         setReload(!reload)
@@ -123,12 +138,15 @@ function Usuarios() {
                                             </div>
 
                                             {/* <!--ADD TASK--> */}
-                                            <div className="d-flex justify-content-evenly mb-3">
-                                                <textarea type="text" className="form-control mx-3" id="adicionarTarefa"
-                                                    placeholder="Minha nova tarefa"></textarea>
-                                                <button type="button" className="btn btn-outline-primary">ADD</button>
-                                            </div>
-
+                                            <form>
+                                                <div className="d-flex justify-content-evenly mb-3">
+                                                
+                                                    <textarea type="text" className="form-control mx-3" id="adicionarTarefa"
+                                                        placeholder="Minha nova tarefa" name="textArea" ></textarea>
+                                                    <button id={usuario._id} type="button" className="btn btn-outline-primary" onClick={handleSubmit}>ADD</button>
+                                                
+                                                </div>
+                                            </form>
                                         </div>
 
                                     </div>
