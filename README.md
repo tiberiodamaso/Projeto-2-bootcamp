@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# \[TODO 92\]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+\[Build status badge\]
 
-## Available Scripts
+Front End application oriented to SPA
 
-In the project directory, you can run:
+## Technologies used
 
-### `npm start`
+- [React](https://reactjs.org/) single page application
+- Routing done using [React Router](https://reacttraining.com/react-router/web/guides/philosophy)
+- [Ironhack API](https://ironrest.herokuapp.com/todo92/) 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Architecture diagrams
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+... \[add diagrams here\]
+![Alt text](../../Screenshot%202022-11-22%20at%2014.35.32.png)
 
-### `npm test`
+## Setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository and install the dependencies
+```bash
+npm install
+```
+2. Start the frontend application locally
+```bash
+npm start
+```
 
-### `npm run build`
+## Available commands
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* `npm start`: Start the app locally in your development environment, by default it will be in http://localhost:3000.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Development flow
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Here are the steps of the process you need to follow in order to integrate new code or a new feature into the project:
 
-### `npm run eject`
+1. Create a local branch to get started using git: `git checkout -b <your-name>`.
+1. Develop the new feature while doing atomic commits to your local branch using `git commit`.
+1. After you are done, you might want to do a `git rebase develop` in case new changes were integrated, so your new commits are applied on top of that and you make sure everything still works.
+1. Now you are ready to create a new Pull Request with your changes, but before, push your changes to origin using `git push -u origin <your-branch-name>`.
+1. Your code should be reviewed, you can update the branch with new changes after you get some feedback.
+1. After the Pull Request is approved, merge it using the UI on Github (you can also remove the branch directly from the same page, which is also convenient). Your code will land to the `develop` branch (and eventually deployed into the staging environment).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## CSS framework
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This project implements [Bootstrap](https://getbootstrap.com) and [Bootstrap icons](https://icons.getbootstrap.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Routes
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This project is using [`react-router-dom v4`](https://reacttraining.com/react-router/core), have a look at `Routes.jsx` which is the file that defines the routes that are available.
 
-## Learn More
+There are several routes to navigate to different pages of the app:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+\[path="/" Home Page 
+path="/equipe" Equipe Page
+        path="/novo" Cadastra novo usuário na equipe
+        path="/equipe/:id" Recupera detalhes de cada usuário
+        path="*" Trata de páginas inexistentes\]
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## CI/CD
 
-### Code Splitting
+\[Autodeploy on new push to GitHub\]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Deployment
 
-### Analyzing the Bundle Size
+\[Deployed using netlify.com\]
+[Netlify](https://www.netlify.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Test deployment
 
-### Making a Progressive Web App
+\[list here the url where your environments live\]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The `master` branch deploys to http://todo92.netlify.com.

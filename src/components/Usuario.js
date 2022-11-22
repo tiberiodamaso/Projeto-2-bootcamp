@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDrop } from "react-dnd";
@@ -53,6 +53,8 @@ function Usuario(props) {
     }
   }
 
+  console.log(collectedProps)
+  
   return (
     <div ref={drop} className="col">
       <div className="card mb-4 rounded-3 shadow-sm">

@@ -6,6 +6,7 @@ import CadastrarUsuario from "./pages/CadastrarUsuario";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Detalhes from "./pages/Detalhes";
+import Error from "./pages/Error";
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/equipe" element={<Equipe />} />
         <Route path="/novo" element={<CadastrarUsuario />} />
         <Route path="/equipe/:id" element={<Detalhes />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );
