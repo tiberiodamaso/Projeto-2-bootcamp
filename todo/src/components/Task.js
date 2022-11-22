@@ -1,16 +1,17 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDrag } from "react-dnd";
-import { cloneElement } from "react";
+import DeleteTimer from "./DeleteTimer";
 
 function Task(props) {
   const { tarefa, index, usuario, handleReload, setTarefas } = props;
 
-  const [{ opacity }, dragRef] = useDrag(
+  const [{ dnd }, dragRef] = useDrag(
     () => ({
       type: "task",
       item: { tarefa },
       end: ((item, monitor) => {
+        console.log(dnd);
         if (monitor.didDrop()) {
           deleteItem(index);
         }
@@ -19,11 +20,13 @@ function Task(props) {
     []
   );
 
+  /*
   async function handleDelete(e) {
     const eventIndex = e.currentTarget.parentElement.getAttribute("name");
     deleteItem(eventIndex);
   }
-
+  */
+ 
   async function deleteItem(_index) {
     const usuarioId = usuario._id;
     try {
@@ -66,13 +69,10 @@ function Task(props) {
       >
         {tarefa.nome}
       </span>
-      <button
-        name={usuario._id}
-        className="btn text-danger p-0"
-        onClick={handleDelete}
-      >
-        <i className="bi bi-trash"></i>
-      </button>
+      
+      <DeleteTimer delFunction={deleteItem} index={index} />
+
+      
     </div>
   );
 }
