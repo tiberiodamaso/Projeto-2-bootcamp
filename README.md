@@ -1,6 +1,4 @@
-# \[TODO 92\]
-
-\[Build status badge\]
+# TODO 92
 
 Front End application oriented to SPA
 
@@ -12,8 +10,8 @@ Front End application oriented to SPA
 
 ### Architecture diagrams
 
-... \[add diagrams here\]
-![Alt text](../../Screenshot%202022-11-22%20at%2014.35.32.png)
+Diagram
+[Diagram](/src/assets/diagram.png)
 
 ## Setup
 
@@ -51,23 +49,21 @@ This project is using [`react-router-dom v4`](https://reacttraining.com/react-ro
 
 There are several routes to navigate to different pages of the app:
 
-\[path="/" Home Page 
-path="/equipe" Equipe Page
-        path="/novo" Cadastra novo usuário na equipe
-        path="/equipe/:id" Recupera detalhes de cada usuário
-        path="*" Trata de páginas inexistentes\]
+1. path="/" Home Page
+1. path="/equipe" Equipe Page
+1. path="/novo" Cadastra novo usuário na equipe
+1. path="/equipe/:id" Recupera detalhes de cada usuário
+1. path="*" Trata de páginas inexistentes\]
 
 ## CI/CD
 
-\[Autodeploy on new push to GitHub\]
+Autodeploy on new push to GitHub
 
 ## Deployment
 
-\[Deployed using netlify.com\]
+Deployed using netlify.com
 [Netlify](https://www.netlify.com/)
 
 ### Test deployment
-
-\[list here the url where your environments live\]
 
 The `master` branch deploys to http://todo92.netlify.com.
