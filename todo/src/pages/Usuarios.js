@@ -89,6 +89,38 @@ function Usuarios() {
         }
     }
 
+    function handleDragStart(e) {
+        e.dataTransfer.setData("text", e.target.innerText);
+        console.log(e.target.innerText)
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault()
+    }
+
+    async function handleDrop(e) {
+        e.preventDefault()
+        const tarefaNome = e.dataTransfer.getData("text")
+        const usuarioId = e.target.nextElementSibling.getAttribute('name')
+        try{
+            const response = await axios.get(`https://ironrest.herokuapp.com/todo92/${usuarioId}`)
+            const usuario = response.data
+            const clone = { ...usuario }
+            delete clone._id
+            const tarefa = {
+                nome: tarefaNome,
+                feito: ''
+            }
+            clone.tarefas.push(tarefa)
+            await axios.put(`https://ironrest.herokuapp.com/todo92/${usuarioId}`, clone)
+            toast.success('Tarefa adicionada com sucesso.')
+            handleReload()
+
+        } catch (error){
+            console.log(error)
+        }
+    }
+
     return (
 
         <main>
@@ -125,9 +157,9 @@ function Usuarios() {
                                                 {usuario.tarefas.length > 0 && usuario.tarefas.map((tarefa, index) => {
                                                     if (tarefa.nome.length > 0) {
                                                     return (
-                                                        <div className="d-flex justify-content-between" key={index} name={index}>
+                                                        <div className="d-flex justify-content-between" key={index} name={index} onDragOver={handleDragOver} onDrop={handleDrop}>
                                                             <input className="col-1 form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleChange} />
-                                                                <span className="col-9 form-check-label text-start" htmlFor="flexSwitchCheckDefault">
+                                                                <span className="col-9 form-check-label text-start" htmlFor="flexSwitchCheckDefault" draggable={true} onDragStart={handleDragStart}>
                                                                     {tarefa.nome}
                                                                 </span>
                                                             <button name={usuario._id} className="btn text-danger p-0" onClick={handleDelete}><i className="bi bi-trash"></i></button>
