@@ -39,7 +39,7 @@ function Usuario(props) {
       delete clone._id;
       const tarefa = {
         nome: nome,
-        feito: feito ?? "",
+        feito: feito ?? false,
       };
       clone.tarefas.push(tarefa);
       await axios.put(
