@@ -4,52 +4,52 @@ import { useDrag } from "react-dnd";
 import DeleteTimer from "./DeleteTimer";
 
 function Task(props) {
-  const { tarefa, index, usuario, handleReload, setTarefas } = props;
+    const { tarefa, index, usuario, handleReload, setTarefas } = props;
 
-  const [{ dnd }, dragRef] = useDrag(
-    () => ({
-      type: "task",
-      item: { tarefa },
-      end: ((item, monitor) => {
-        console.log(dnd);
-        if (monitor.didDrop()) {
-          deleteItem(index);
-        }
-      })
-      }),
+    const [{ dnd }, dragRef] = useDrag(
+        () => ({
+            type: "task",
+            item: { tarefa },
+            end: ((item, monitor) => {
+                console.log(dnd);
+                if (monitor.didDrop()) {
+                    deleteItem(index);
+                }
+            })
+        }),
     [tarefa]
-  );
+    );
 
-  /*
-  async function handleDelete(e) {
-    const eventIndex = e.currentTarget.parentElement.getAttribute("name");
-    deleteItem(eventIndex);
-  }
-  */
- 
-  async function deleteItem(_index) {
-    const usuarioId = usuario._id;
-    try {
-      const response = await axios.get(
-        `https://ironrest.herokuapp.com/todo92/${usuarioId}`
-      );
-      const usuario = response.data;
-      const clone = { ...usuario };
-      delete clone._id;
-      clone.tarefas.splice(_index, 1);
-      await axios.put(
-        `https://ironrest.herokuapp.com/todo92/${usuarioId}`,
-        clone
-      );
-      setTarefas(clone.tarefas);
-      handleReload();
-    } catch (error) {
-      console.log(error);
-      toast.error("Algo deu errado");
+    /*
+    async function handleDelete(e) {
+      const eventIndex = e.currentTarget.parentElement.getAttribute("name");
+      deleteItem(eventIndex);
     }
-  }
+    */
 
-  async function handleChange(e) {
+    async function deleteItem(_index) {
+        const usuarioId = usuario._id;
+        try {
+            const response = await axios.get(
+                `https://ironrest.herokuapp.com/todo92/${usuarioId}`
+            );
+            const usuario = response.data;
+            const clone = { ...usuario };
+            delete clone._id;
+            clone.tarefas.splice(_index, 1);
+            await axios.put(
+                `https://ironrest.herokuapp.com/todo92/${usuarioId}`,
+                clone
+            );
+            setTarefas(clone.tarefas);
+            handleReload();
+        } catch (error) {
+            console.log(error);
+            toast.error("Algo deu errado");
+        }
+    }
+
+    async function handleChange(e) {
         // const tarefa = e.currentTarget.nextElementSibling;
         // tarefa.classList.toggle("text-decoration-line-through");
         const usuarioId = usuario._id;
@@ -76,30 +76,30 @@ function Task(props) {
             console.log(error);
             toast.error("Algo deu errado");
         }
-  }
-  
-  return (
-    <div ref={dragRef} className="d-flex justify-content-between" name={index}>
-      <input
-        className="col-1 form-check-input"
-        type="checkbox"
-        role="switch"
-        id="flexSwitchCheckDefault"
+    }
+
+    return (
+        <div ref={dragRef} className="d-flex justify-content-between" name={index}>
+            <input
+                className="col-1 form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
         checked={tarefa.feito}
-        onChange={handleChange}
-      />
+                onChange={handleChange}
+            />
         <span
         className={"col-9 form-check-label text-start " + (tarefa.feito ? 'text-decoration-line-through' : '')}
-        htmlFor="flexSwitchCheckDefault"
-      >
-      {tarefa.nome}
-      </span>
-      
-      <DeleteTimer delFunction={deleteItem} index={index} />
+                    htmlFor="flexSwitchCheckDefault"
+                >
+                    {tarefa.nome}
+                </span>
 
-      
-    </div>
-  );
+            <DeleteTimer delFunction={deleteItem} index={index} />
+
+
+        </div>
+    );
 }
 
 export default Task;
