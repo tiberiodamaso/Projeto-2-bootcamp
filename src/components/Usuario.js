@@ -19,10 +19,15 @@ function Usuario(props) {
     },
   }));
 
-
+  
   async function handleSubmit(e) {
     e.preventDefault();
     const caixa = e.currentTarget.previousSibling;
+    caixa.value = caixa.value.trim();
+    if (caixa.value.length === 0) {
+      toast.error("Digite uma tarefa válida!");
+      return false;
+    }
     await adicionarTarefa(caixa.value);
     caixa.value = "";
     toast.success("Tarefa adicionada com sucesso.");
