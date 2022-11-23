@@ -49,11 +49,35 @@ function Task(props) {
     }
   }
 
-  function handleChange(e) {
-    const tarefa = e.currentTarget.nextElementSibling;
-    tarefa.classList.toggle("text-decoration-line-through");
+  async function handleChange(e) {
+        // const tarefa = e.currentTarget.nextElementSibling;
+        // tarefa.classList.toggle("text-decoration-line-through");
+        const usuarioId = usuario._id;
+        try {
+            const response = await axios.get(
+                `https://ironrest.herokuapp.com/todo92/${usuarioId}`
+            );
+            const usuario = response.data;
+            const clone = { ...usuario };
+            delete clone._id;
+            if (clone.tarefas[index].feito === false) {
+                clone.tarefas[index].feito = true;
+            } else {
+                clone.tarefas[index].feito = false;
+            }
+            await axios.put(
+                `https://ironrest.herokuapp.com/todo92/${usuarioId}`,
+                clone
+            );
+            setTarefas(clone.tarefas);
+            toast.success("Tarefa atualizada com sucesso!");
+            handleReload();
+        } catch (error) {
+            console.log(error);
+            toast.error("Algo deu errado");
+        }
   }
-
+  
   return (
     <div ref={dragRef} className="d-flex justify-content-between" name={index}>
       <input
@@ -61,13 +85,14 @@ function Task(props) {
         type="checkbox"
         role="switch"
         id="flexSwitchCheckDefault"
+        checked={tarefa.feito}
         onChange={handleChange}
       />
-      <span
-        className="col-9 form-check-label text-start"
+        <span
+        className={"col-9 form-check-label text-start " + (tarefa.feito ? 'text-decoration-line-through' : '')}
         htmlFor="flexSwitchCheckDefault"
       >
-        {tarefa.nome}
+      {tarefa.nome}
       </span>
       
       <DeleteTimer delFunction={deleteItem} index={index} />
