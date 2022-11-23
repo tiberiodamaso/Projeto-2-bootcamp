@@ -11,15 +11,25 @@ function Usuario(props) {
   const [tarefas, setTarefas] = useState(usuario.tarefas);
 
 
-  const [collectedProps, drop] = useDrop(() => ({
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item) => {
       adicionarTarefa(item.tarefa.nome, item.tarefa.feito);
-      handleReload();
+      handleReload();      
     },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   }));
 
   
+  const isActive = canDrop && isOver
+  let backgroundColor
+  if (isActive) {
+    backgroundColor = '#f5f5f5'
+  } 
+
   async function handleSubmit(e) {
     e.preventDefault();
     const caixa = e.currentTarget.previousSibling;
@@ -59,12 +69,13 @@ function Usuario(props) {
   }
 
 //   console.log(collectedProps)
+ 
   
   return (
     <div ref={drop} className="col">
       <div className="card mb-4 rounded-3 shadow-sm">
         {/* <!--CARD HEADER--> */}
-        <div className="card-header py-3">
+        <div className="card-header">
           <img
             className="border rounded-circle w-25"
             src={usuario.foto}
@@ -76,10 +87,11 @@ function Usuario(props) {
         </div>
 
         {/* <!--CARD BODY--> */}
-        <div className="card-body">
+        <div className="card-body" style={{ backgroundColor }}>
           {/* <!--TASKS--> */}
-          <div className="d-flex flex-column form-check form-switch mb-3">
+          
             {tarefas.map((tarefa, index) => (
+              
               <Task
                 key={index}
                 tarefa={tarefa}
@@ -89,11 +101,15 @@ function Usuario(props) {
                 setTarefas={setTarefas}
               />
             ))}
-          </div>
+            {isActive && (
+              <div className="shadow-sm p-2 m-3 bg-body rounded">
+                <span className="text-black-50 fst-italic">Solte a tarefa aqui</span>
+              </div>
+            )}
 
           {/* <!--ADD TASK--> */}
           <form>
-            <div className="d-flex justify-content-evenly mb-3">
+            <div className="d-flex justify-content-evenly my-3">
               <textarea
                 type="text"
                 className="form-control mx-3"
