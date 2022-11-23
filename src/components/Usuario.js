@@ -77,11 +77,12 @@ function Usuario(props) {
         {/* <!--CARD HEADER--> */}
         <div className="card-header">
           <img
-            className="border rounded-circle w-25"
+            className="border rounded-circle"
+            style={{width:"70px"}}
             src={usuario.foto}
             alt="foto do usuário"
           />
-          <h4 className="my-0 fw-normal">
+          <h4 className="fs-4 my-0 fw-normal">
             {usuario.nome} | {usuario.setor}{" "}
           </h4>
         </div>
