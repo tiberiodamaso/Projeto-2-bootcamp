@@ -17,7 +17,7 @@ function Task(props) {
                 }
             })
         }),
-    [tarefa]
+        [tarefa]
     );
 
     /*
@@ -85,15 +85,15 @@ function Task(props) {
                 type="checkbox"
                 role="switch"
                 id="flexSwitchCheckDefault"
-        checked={tarefa.feito}
+                checked={tarefa.feito}
                 onChange={handleChange}
             />
-        <span
-        className={"col-9 form-check-label text-start " + (tarefa.feito ? 'text-decoration-line-through' : '')}
-                    htmlFor="flexSwitchCheckDefault"
-                >
-                    {tarefa.nome}
-                </span>
+            <span
+                className={"col-9 form-check-label text-start " + (tarefa.feito ? 'text-decoration-line-through' : '')}
+                htmlFor="flexSwitchCheckDefault"
+            >
+                {tarefa.nome}
+            </span>
 
             <DeleteTimer delFunction={deleteItem} index={index} />
 
