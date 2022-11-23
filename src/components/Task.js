@@ -17,7 +17,7 @@ function Task(props) {
         }
       })
       }),
-    []
+    [tarefa]
   );
 
   /*
