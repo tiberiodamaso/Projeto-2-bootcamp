@@ -53,7 +53,7 @@ function Usuario(props) {
     }
   }
 
-//   console.log(collectedProps)
+  console.log(collectedProps)
   
   return (
     <div ref={drop} className="col">
