@@ -5,7 +5,7 @@ import DeleteTimer from "./DeleteTimer";
 import moveImg from '../assets/move.png';
 
 function Task(props) {
-    const { tarefa, index, usuario, handleReload, setTarefas } = props;
+  const { tarefa, index, usuario, handleReload, setTarefas } = props;
 
   const [{ isDragging, opacity}, dragRef, preview] = useDrag(
     () => ({
@@ -59,31 +59,9 @@ function Task(props) {
       console.log(error);
       toast.error("Algo deu errado");
     }
-    */
+  }
 
-    async function deleteItem(_index) {
-        const usuarioId = usuario._id;
-        try {
-            const response = await axios.get(
-                `https://ironrest.herokuapp.com/todo92/${usuarioId}`
-            );
-            const usuario = response.data;
-            const clone = { ...usuario };
-            delete clone._id;
-            clone.tarefas.splice(_index, 1);
-            await axios.put(
-                `https://ironrest.herokuapp.com/todo92/${usuarioId}`,
-                clone
-            );
-            setTarefas(clone.tarefas);
-            handleReload();
-        } catch (error) {
-            console.log(error);
-            toast.error("Algo deu errado");
-        }
-    }
-
-    async function handleChange(e) {
+  async function handleChange(e) {
         // const tarefa = e.currentTarget.nextElementSibling;
         // tarefa.classList.toggle("text-decoration-line-through");
         const usuarioId = usuario._id;
