@@ -17,6 +17,7 @@ function Usuario(props) {
       adicionarTarefa(item.tarefa.nome, item.tarefa.feito);
       handleReload();      
     },
+    canDrop: (item) => item.usuario !== usuario,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
