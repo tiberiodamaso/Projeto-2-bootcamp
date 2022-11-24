@@ -10,9 +10,8 @@ function Task(props) {
   const [{ isDragging, opacity}, dragRef, preview] = useDrag(
     () => ({
       type: "task",
-      item: { tarefa },
+      item: { tarefa, usuario },
       end: ((item, monitor) => {
-        
         if (monitor.didDrop()) {
           deleteItem(index);
         }
